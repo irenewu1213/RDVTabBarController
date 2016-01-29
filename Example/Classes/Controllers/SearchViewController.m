@@ -26,6 +26,8 @@
 #import "ASIFormDataRequest.h"
 #import "CJSONDeserializer.h"
 #import "LogInViewController.h"
+#import "ZLImageViewDisplayView.h"
+#import "UIImageView+WebCache.h"
 extern NSString * IPaddress;
 
 @interface SearchViewController()<UITextFieldDelegate>{
@@ -49,7 +51,7 @@ extern NSString * IPaddress;
 }
 
 #pragma mark - View lifecycle
-
+/*
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -80,9 +82,62 @@ extern NSString * IPaddress;
     label.textColor = [[UIColor alloc]initWithRed:50.0f/255.0f green:50.0f/255.0f blue:50.0f/255.0f alpha:0.7f];
     label.text = @"Help you around.";
     [self.view addSubview:label];
-    
-    
+}
+*/
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    UIImageView  *imageView =[[UIImageView alloc] initWithFrame:CGRectMake(100, 30, 120, 120)];
+    [imageView setImage:[UIImage imageNamed:@"logo.png"]];
+    [self.view addSubview:imageView];
+    
+    UILabel *logoLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 150, 80, 40)];
+    logoLabel.text=@"HelPal";
+    logoLabel.textColor = [[UIColor alloc]initWithRed:50.0f/255.0f green:50.0f/255.0f blue:50.0f/255.0f alpha:1.0f];
+    [self.view addSubview:logoLabel];
+    
+    textField = [[UITextField alloc] initWithFrame:CGRectMake(70.0f, 200.0f, 170.0f, 30.0f)];
+    textField.delegate = self;
+    [textField setBorderStyle:UITextBorderStyleRoundedRect]; //外框类型
+    textField.placeholder = @"search"; //默认显示的字
+    
+    [self.view addSubview:textField];
+    
+    UIButton  *searchButton =[[UIButton alloc] initWithFrame:CGRectMake(250, 200, 25, 25)];
+    [searchButton setBackgroundImage:[UIImage imageNamed:@"SearchIcon@2x.png"] forState:UIControlStateNormal];
+    
+    [searchButton addTarget:self action:@selector(SearchButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:searchButton];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100, 250, 150, 20)];
+    label.textColor = [[UIColor alloc]initWithRed:50.0f/255.0f green:50.0f/255.0f blue:50.0f/255.0f alpha:0.7f];
+    label.text = @"Help you around.";
+    [self.view addSubview:label];
+    
+    //recommendation
+    //获取要显示的位置
+    CGRect screenFrame = [[UIScreen mainScreen] bounds];
+    
+    CGRect frame = CGRectMake(30, 300, screenFrame.size.width - 60, 100);
+    
+    NSArray *imageArray = @[@"001.jpg", @"002.jpg", @"003.jpg", @"004.jpg", @"005.jpg", @"006.jpg"];
+    
+    //初始化控件
+    ZLImageViewDisplayView *imageViewDisplay = [ZLImageViewDisplayView zlImageViewDisplayViewWithFrame:frame];
+    imageViewDisplay.imageViewArray = imageArray;
+    imageViewDisplay.scrollInterval = 3;
+    imageViewDisplay.animationInterVale = 0.6;
+    [self.view addSubview:imageViewDisplay];
+    
+    [imageViewDisplay addTapEventForImageWithBlock:^(NSInteger imageIndex) {
+        NSString *str = [NSString stringWithFormat:@"我是第%ld张图片", imageIndex];
+        UIAlertView *alter = [[UIAlertView alloc] initWithTitle:@"提示" message:str delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alter show];
+    }];
+    
+    
 }
 
 - (NSUInteger)supportedInterfaceOrientations {

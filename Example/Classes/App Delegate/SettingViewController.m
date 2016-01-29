@@ -33,6 +33,10 @@ extern NSDictionary * dictionary;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIImageView  *imageView2 =[[UIImageView alloc] initWithFrame:CGRectMake(0, 453, 640, 1)];
+    [imageView2 setImage:[UIImage imageNamed:@"line.jpg"]];
+    [self.view addSubview:imageView2];
+    
     [[self rdv_tabBarController] setTabBarHidden:0];
     //初始化数据
     [self initData];
