@@ -37,6 +37,7 @@
 
 @end
 
+extern NSInteger myBadge;
 @implementation RDVTabBarItem
 
 - (id)initWithFrame:(CGRect)frame {
@@ -121,6 +122,7 @@
     // Draw image and title
     
     if (![_title length]) {
+        NSLog(@"--------------draw rect--------------");
         [image drawInRect:CGRectMake(roundf(frameSize.width / 2  - imageSize.width / 2) +
                                      _imagePositionAdjustment.horizontal,
                                      roundf(frameSize.height / 2  - imageSize.height / 2) +
@@ -180,7 +182,8 @@
     }
     
     // Draw badges
-    
+    if (myBadge != 0) {
+        NSLog(@"--------------draw rect <> 0--------------");
     if ([[self badgeValue] length]) {
         CGSize badgeSize = CGSizeZero;
         
@@ -243,7 +246,7 @@
 #endif
         }
     }
-    
+    }
     CGContextRestoreGState(context);
 }
 

@@ -24,7 +24,7 @@ extern NSInteger palID;
 extern NSString * IPaddress;
 NSMutableArray * chatwithID;
 NSString * chatwithIDNum;
-NSInteger shown;
+NSInteger myBadge;
 bool haspush ;
 
 @interface ChatViewController ()<UITableViewDataSource,UITableViewDelegate>{
@@ -51,8 +51,7 @@ bool haspush ;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    shown = 0;
-    haspush = 0;
+
     LogInViewController * _login = [[LogInViewController alloc]init];
     [self presentViewController:_login animated:YES completion:^(void){
         NSLog(@"return page done...");
@@ -81,11 +80,13 @@ bool haspush ;
 - (void)viewWillAppear:(BOOL)animated {
 //    if (shown < 2) {
         [self performSelector:@selector(getNewTask:) withObject:self afterDelay:0.1f];
-        haspush = 0;
-        shown ++;
+    
+ 
 //    }
     [super viewWillAppear:animated];
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
+    
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -148,7 +149,10 @@ bool haspush ;
 */
     
     cell.textLabel.text=[p1 getName];
-    cell.detailTextLabel.text=p1.personSkill ;
+    if(indexPath.section > 0)
+    {
+        cell.detailTextLabel.text=[@" " stringByAppendingString: p1.personSkill] ;
+    }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
     if(indexPath.section > 0)
@@ -206,6 +210,7 @@ bool haspush ;
 
 -(void)getNewTask:(id)sender{
     NSString *urlstr = [IPaddress stringByAppendingString: @"/AppDemo/news.php"];
+    NSLog(@"-----------in getNewTask--------------");
     NSURL *myurl = [NSURL URLWithString:urlstr];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:myurl];
     [request setDelegate:self];
@@ -245,7 +250,11 @@ bool haspush ;
     }
     [_contacts addObject:group1];
     NSInteger Badge = [task_num intValue];
+    myBadge = Badge;
     if (Badge != 0 ) {
+        [[self rdv_tabBarItem] setBadgeValue:task_num];
+    }
+    if (Badge == 0 ) {
         [[self rdv_tabBarItem] setBadgeValue:task_num];
     }
     [_tableView reloadData];

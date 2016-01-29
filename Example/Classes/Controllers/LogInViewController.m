@@ -27,23 +27,27 @@ extern NSInteger palID;
     self.title = @"LogIn";
     self.view.backgroundColor = [UIColor colorWithRed:250/255.0 green:250/255.0 blue:250/255.0 alpha:1.0];
     
+    UIImageView  *imageView =[[UIImageView alloc] initWithFrame:CGRectMake(100, 130, 120, 120)];
+    [imageView setImage:[UIImage imageNamed:@"logo.png"]];
+    [self.view addSubview:imageView];
+    
     
     // Do any additional setup after loading the view, typically from a nib.
-    UILabel *txt1 = [[UILabel alloc] initWithFrame:CGRectMake(30,100,80,30)];
+    UILabel *txt1 = [[UILabel alloc] initWithFrame:CGRectMake(30,300,80,30)];
     [txt1 setText:@"Username"];
     [txt1 setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:txt1];
     
-    UILabel *txt2 = [[UILabel alloc] initWithFrame:CGRectMake(30,140,80,30)];
+    UILabel *txt2 = [[UILabel alloc] initWithFrame:CGRectMake(30,340,80,30)];
     [txt2 setText:@"Password"];
     [txt2 setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:txt2];
     
-    username = [[UITextField alloc]initWithFrame:CGRectMake(130,100, 150, 30)];
+    username = [[UITextField alloc]initWithFrame:CGRectMake(130,300, 150, 30)];
     [username setBorderStyle:UITextBorderStyleRoundedRect];
     [self.view addSubview:username];
     
-    password = [[UITextField alloc]initWithFrame:CGRectMake(130,140, 150, 30)];
+    password = [[UITextField alloc]initWithFrame:CGRectMake(130,340, 150, 30)];
     [password setBorderStyle:UITextBorderStyleRoundedRect];
     [password setSecureTextEntry:YES];
     [self.view addSubview:password];
@@ -51,7 +55,7 @@ extern NSInteger palID;
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [btn setTitle:@"LogIn" forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
-    [btn setFrame:CGRectMake(90, 180, 150, 40)];
+    [btn setFrame:CGRectMake(90, 380, 150, 40)];
     [self.view addSubview:btn];
     
     

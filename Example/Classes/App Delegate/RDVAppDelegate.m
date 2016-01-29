@@ -31,7 +31,7 @@
 #import "ChatViewController.h"
 #import "LogInViewController.h"
 
-NSString * IPaddress = @"http://10.77.10.46:8088";
+NSString * IPaddress = @"http://10.77.10.43:8088";
 
 @implementation RDVAppDelegate
 
@@ -90,6 +90,8 @@ NSString * IPaddress = @"http://10.77.10.46:8088";
 }
 
 - (void)customizeInterface {
+    
+    
     UINavigationBar *navigationBarAppearance = [UINavigationBar appearance];
     
     UIImage *backgroundImage = nil;

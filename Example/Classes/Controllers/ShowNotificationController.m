@@ -19,6 +19,7 @@
 #import "ASIFormDataRequest.h"
 #import "CJSONDeserializer.h"
 #import "ChatRecorderViewController.h"
+#import "ChatViewController.h"
 
 extern NSString * IPaddress;
 NSInteger palID;
@@ -72,7 +73,13 @@ static NSString *const cellIdentifier=@"NoteIdentifier";
     [[self rdv_tabBarController] setTabBarHidden:YES];
     
 }
-
+/*
+- (void)viewWillDisappear:(BOOL)animated {
+    //    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
+    
+    [super viewWillDisappear:animated];
+}
+*/
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.cellsForTask.count;
@@ -82,6 +89,9 @@ static NSString *const cellIdentifier=@"NoteIdentifier";
     NoteCell *cell=[tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.delegate=self;
     cell.cellFrame=self.cellsForTask[indexPath.row];
+    UISwitch *sw=[[UISwitch alloc]init];
+    [sw addTarget:self action:@selector(switchValueChange:) forControlEvents:UIControlEventValueChanged];
+    cell.accessoryView=sw;
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -204,8 +214,12 @@ static NSString *const cellIdentifier=@"NoteIdentifier";
     return cell;
 }
 */
+
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [self performSelector:@selector(getNewTask:) withObject:self afterDelay:0.0f];
+    NSLog(@"----------in showNoti------------");
+    
     [[self rdv_tabBarController] setTabBarHidden:0];
 }
 
@@ -217,8 +231,20 @@ static NSString *const cellIdentifier=@"NoteIdentifier";
     [request setDidFinishSelector:@selector(GetResult:)];
     [request setDidFailSelector:@selector(GetErr:)];
     [request startAsynchronous];
+    
 }
-
+/*
+-(void)reloadTaskNum:(id)sender{
+    NSString *urlstr = [IPaddress stringByAppendingString: @"/AppDemo/changeStatus.php"];
+    NSURL *myurl = [NSURL URLWithString:urlstr];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:myurl];
+    [request setDelegate:self];
+    [request setDidFinishSelector:@selector(GetResult:)];
+    [request setDidFailSelector:@selector(GetErr:)];
+    [request startAsynchronous];
+    
+}
+*/
 //获取请求结果
 - (void)GetResult:(ASIHTTPRequest *)request{
     NSString * taskcontent = [request responseString];
